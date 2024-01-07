@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "nx serve",
-    "build": "nx build --output-path=docs",
+    "build": "nx build --output-path=docs --base-href=/chess-app/",
     "watch": "nx build --watch --configuration development",
     "test": "nx test",
     "format": "nx format:write  --base main"

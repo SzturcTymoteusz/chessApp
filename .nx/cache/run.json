@@ -1,8 +1,8 @@
 {
   "run": {
-    "command": "nx build --output-path=docs",
-    "startTime": "2024-01-07T16:04:27.645Z",
-    "endTime": "2024-01-07T16:04:30.750Z",
+    "command": "nx build --output-path=docs --base-href=/chess-app/",
+    "startTime": "2024-01-07T16:10:00.092Z",
+    "endTime": "2024-01-07T16:10:03.248Z",
     "inner": false
   },
   "tasks": [
@@ -11,8 +11,8 @@
       "target": "build",
       "projectName": "chess-board",
       "hash": "16831315035623757571",
-      "startTime": "2024-01-07T16:04:27.649Z",
-      "endTime": "2024-01-07T16:04:27.718Z",
+      "startTime": "2024-01-07T16:10:00.095Z",
+      "endTime": "2024-01-07T16:10:00.188Z",
       "params": "",
       "cacheStatus": "local-cache-hit",
       "status": 0
@@ -21,9 +21,9 @@
       "taskId": "chessApp:build:production",
       "target": "build",
       "projectName": "chessApp",
-      "hash": "6420164894128897264",
-      "startTime": "2024-01-07T16:04:27.726Z",
-      "endTime": "2024-01-07T16:04:30.750Z",
+      "hash": "605105604923253103",
+      "startTime": "2024-01-07T16:10:00.199Z",
+      "endTime": "2024-01-07T16:10:03.247Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 0
