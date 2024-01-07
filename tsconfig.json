@@ -1,9 +1,5 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "paths": {
-      "chess-board": ["./dist/chess-board"]
-    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -11,23 +7,15 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
-    "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
     "useDefineForClassFields": false,
-    "strictPropertyInitialization": false,
-    "lib": ["ES2022", "dom"]
+    "strictPropertyInitialization": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "extends": "./tsconfig.base.json"
 }
