@@ -42,16 +42,20 @@
   "fileMap": {
     "nonProjectFiles": [
       {
+        "file": "src/app/game/game.component.ts",
+        "hash": "8830254871547333933"
+      },
+      {
+        "file": "nx.json",
+        "hash": "17795799972346540511"
+      },
+      {
+        "file": ".nx/cache/d/server-process.json",
+        "hash": "2783008008392463523"
+      },
+      {
         "file": "src/index.html",
         "hash": "3225828232122857266"
-      },
-      {
-        "file": "tsconfig.spec.json",
-        "hash": "11901043454877211451"
-      },
-      {
-        "file": "project.json",
-        "hash": "14277834750917802489"
       },
       {
         "file": "src/main.ts",
@@ -62,48 +66,76 @@
         "hash": "11674506502668556549"
       },
       {
-        "file": ".nx/cache/d/server-process.json",
-        "hash": "2783008008392463523"
-      },
-      {
-        "file": "src/app/app.routes.ts",
-        "hash": "1012069523523850385"
-      },
-      {
-        "file": "package.json",
-        "hash": "6543386316850385331"
-      },
-      {
-        "file": "src/app/app.component.ts",
-        "hash": "2269052486063796710"
-      },
-      {
         "file": "src/app/app.config.ts",
         "hash": "11713316320723186868"
+      },
+      {
+        "file": "project.json",
+        "hash": "14277834750917802489"
+      },
+      {
+        "file": "docs/browser/chunk-37FJOTD7.js",
+        "hash": "16212137646033036847"
+      },
+      {
+        "file": "docs/browser/styles-J2WWWVQD.css",
+        "hash": "15812829669235684880"
+      },
+      {
+        "file": "docs/browser/chunk-SMKUO2FG.js",
+        "hash": "4240973998045443273"
+      },
+      {
+        "file": "tsconfig.spec.json",
+        "hash": "11901043454877211451"
       },
       {
         "file": "src/app/app.component.spec.ts",
         "hash": "11324098852398252112"
       },
       {
+        "file": "package.json",
+        "hash": "15138586495923925759"
+      },
+      {
+        "file": "docs/browser/index.html",
+        "hash": "17346314941520384810"
+      },
+      {
+        "file": "docs/browser/favicon.ico",
+        "hash": "3988961587069885523"
+      },
+      {
         "file": "tsconfig.json",
         "hash": "16814191237920264869"
+      },
+      {
+        "file": "docs/browser/main-S7KCH3A2.js",
+        "hash": "4724149443306335073"
+      },
+      {
+        "file": "docs/3rdpartylicenses.txt",
+        "hash": "4506090400835196609"
+      },
+      {
+        "file": "src/app/app.routes.ts",
+        "hash": "1012069523523850385"
+      },
+      {
+        "file": "docs/browser/polyfills-LZBJRJJE.js",
+        "hash": "5941810377592141465"
       },
       {
         "file": "src/app/game/game.component.spec.ts",
         "hash": "8090355161042423696"
       },
       {
-        "file": "src/app/game/game.component.ts",
-        "hash": "8830254871547333933"
-      },
-      {
-        "file": "nx.json",
-        "hash": "17795799972346540511"
-      },
-      {
         "file": ".vscode/extensions.json",
         "hash": "11723789025057768195"
+      },
+      {
+        "file": "src/app/app.component.ts",
+        "hash": "2269052486063796710"
       }
     ],
     "projectFileMap": {
@@ -183,7 +215,7 @@
         },
         {
           "file": "projects/chess-board/src/public-api.ts",
-          "hash": "6527136669970340594"
+          "hash": "16503360730223135712"
         },
         {
           "file": "projects/chess-board/tsconfig.lib.json",
