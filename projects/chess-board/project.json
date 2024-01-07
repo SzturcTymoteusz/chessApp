@@ -1,0 +1,32 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "chess-board",
+  "projectType": "library",
+  "sourceRoot": "projects/chess-board/src",
+  "prefix": "lib",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "project": "projects/chess-board/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "projects/chess-board/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "projects/chess-board/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": ["{workspaceRoot}/dist/chess-board"]
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "projects/chess-board/tsconfig.spec.json",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
+    }
+  }
+}
