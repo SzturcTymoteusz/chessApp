@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ChessBoardCanvasService } from '../chess-board-canvas.service';
-import { ChessBoardConfigService } from '../configuration/chess-board-config.service';
 import {
   BoardCoordinates,
   BoardCoordinatesIndex,
   CoordinatesDrawConfig,
 } from '../../types/board.types';
+import { CoordinatesHelperService } from '../helpers/coordinates-helper.service';
+import { Coordinates } from '../../types/coordinates.types';
+import { ChessBoardThemesService } from '../configuration/chess-board-themes.service';
 
 @Injectable()
 export class DrawChessBoardService {
@@ -14,15 +16,20 @@ export class DrawChessBoardService {
 
   constructor(
     private chessBoardCanvas: ChessBoardCanvasService,
-    private chessBoardConfig: ChessBoardConfigService,
+    private chessBoardThemes: ChessBoardThemesService,
+    private coordinatesHelper: CoordinatesHelperService,
   ) {}
 
   public execute(): void {
-    this.verticalCoordinates = this.getCoordinatesOrder('vertical');
-    this.horizontalCoordinates = this.getCoordinatesOrder('horizontal');
+    this.verticalCoordinates = this.coordinatesHelper.getCoordinatesOrder(
+      Coordinates.Vertical,
+    );
+    this.horizontalCoordinates = this.coordinatesHelper.getCoordinatesOrder(
+      Coordinates.Horizontal,
+    );
 
-    this.verticalCoordinates.forEach((vertical, index) => {
-      this.horizontalCoordinates.forEach((horizontal, horizontalIndex) => {
+    this.verticalCoordinates.forEach((vertical) => {
+      this.horizontalCoordinates.forEach((horizontal) => {
         this.drawSquare({ vertical, horizontal });
         this.drawCoordinates({ vertical, horizontal });
       });
@@ -30,9 +37,9 @@ export class DrawChessBoardService {
   }
 
   private drawSquare({ vertical, horizontal }: BoardCoordinates): void {
-    const chessBoardTheme = this.chessBoardConfig.currentThemeValue;
+    const chessBoardTheme = this.chessBoardThemes.currentTheme;
     const coordinatesIndex = this.getCoordinatesIndex({ vertical, horizontal });
-    const squareColor = this.isDarkSquare(coordinatesIndex.sum)
+    const squareColor = this.isDarkSquare(coordinatesIndex.sum!)
       ? chessBoardTheme.lightSquareColor
       : chessBoardTheme.darkSquareColor;
     const context = this.chessBoardCanvas.context;
@@ -81,11 +88,12 @@ export class DrawChessBoardService {
   ): void {
     const { textBaseline, textAlign, startPointX, startPointY } =
       callbackFunction(coordinatesIndex);
-    const chessBoardTheme = this.chessBoardConfig.currentThemeValue;
+    const chessBoardTheme = this.chessBoardThemes.currentTheme;
+
     const context = this.chessBoardCanvas.context;
     const width = this.chessBoardCanvas.width;
 
-    const coordinateColor = !this.isDarkSquare(coordinatesIndex.sum)
+    const coordinateColor = !this.isDarkSquare(coordinatesIndex.sum!)
       ? chessBoardTheme.lightSquareColor
       : chessBoardTheme.darkSquareColor;
     const squareSize = width / 8;
@@ -141,16 +149,5 @@ export class DrawChessBoardService {
       horizontal: horizontalIndex,
       sum,
     };
-  }
-
-  private getCoordinatesOrder(type: 'horizontal' | 'vertical'): string[] {
-    if (type === 'horizontal')
-      return !this.chessBoardConfig.isWhiteOnBottom
-        ? [...this.chessBoardConfig.horizontalCoordinates].reverse()
-        : [...this.chessBoardConfig.horizontalCoordinates];
-
-    return this.chessBoardConfig.isWhiteOnBottom
-      ? [...this.chessBoardConfig.verticalCoordinates].reverse()
-      : [...this.chessBoardConfig.verticalCoordinates];
   }
 }
