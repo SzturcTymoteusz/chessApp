@@ -6,7 +6,7 @@ export interface BoardCoordinates {
 export interface BoardCoordinatesIndex {
   vertical: number;
   horizontal: number;
-  sum: number;
+  sum?: number;
 }
 
 export interface CoordinatesDrawConfig {

@@ -4,5 +4,6 @@ export interface ChessBoardTheme {
 }
 
 export enum ChessBoardThemes {
-  classic = 'classic',
+  Classic = 'classic',
+  Glass = 'glass',
 }
