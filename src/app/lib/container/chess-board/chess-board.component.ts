@@ -1,16 +1,23 @@
-import { Component } from '@angular/core';
-import { ChessBoardCanvasService } from '../../services/chess-board-canvas.service';
-import { InitializeCanvasViewService } from '../../services/manager/initialize-view.service';
-import { DrawChessBoardService } from '../../services/draw/draw-chess-board.service';
-import { ChessBoardConfigService } from '../../services/configuration/chess-board-config.service';
-import { InitializeChessGameService } from '../../services/manager/initialize-chess-game.service';
-import { FenStringHelperService } from '../../services/helpers/fen-string-helper.service';
-import { CoordinatesHelperService } from '../../services/helpers/coordinates-helper.service';
-import { SetUpAccountService } from '../../services/manager/set-up-account.service';
-import { ChessPiecesThemeService } from '../../services/configuration/chess-pieces-theme.service';
-import { ChessBoardThemesService } from '../../services/configuration/chess-board-themes.service';
-import { ChessPiecesThemes } from '../../types/chess-pieces-theme.types';
-import { ChessBoardThemes } from '../../types/chess-board-theme.types';
+import {Component} from '@angular/core';
+import {ChessBoardCanvasService} from '../../services/chess-board-canvas.service';
+import {InitializeCanvasViewService} from '../../services/manager/initialize-view.service';
+import {DrawChessBoardService} from '../../services/draw/draw-chess-board.service';
+import {ChessBoardConfigService} from '../../services/configuration/chess-board-config.service';
+import {FenStringHelperService} from '../../services/helpers/fen-string-helper.service';
+import {CoordinatesHelperService} from '../../services/helpers/coordinates-helper.service';
+import {SetUpAccountService} from '../../services/manager/set-up-account.service';
+import {ChessPiecesThemeService} from '../../services/configuration/chess-pieces-theme.service';
+import {ChessBoardThemesService} from '../../services/configuration/chess-board-themes.service';
+import {ChessPiecesThemes} from '../../types/chess-pieces-theme.types';
+import {ChessBoardThemes} from '../../types/chess-board-theme.types';
+import {InitializeHoverEffectService} from '../../services/manager/initialize-hover-effect.service';
+import {DrawSquareFrameService} from '../../services/draw/draw-square-frame.service';
+import {CanvasHelperService} from '../../services/helpers/canvas-helper.service';
+import {DrawSquareBackgroundService} from '../../services/draw/draw-square-background.service';
+import {DrawSquareCoordinatesService} from '../../services/draw/draw-square-coordinates.service';
+import {DrawSquareService} from '../../services/draw/draw-square.service';
+import {ChessGameStateService} from '../../services/state/chess-game-state.service';
+import {DrawSquarePieceService} from '../../services/draw/draw-square-piece.service';
 
 @Component({
   selector: 'ca-chess-board',
@@ -23,12 +30,19 @@ import { ChessBoardThemes } from '../../types/chess-board-theme.types';
     InitializeCanvasViewService,
     DrawChessBoardService,
     ChessBoardConfigService,
-    InitializeChessGameService,
     FenStringHelperService,
     CoordinatesHelperService,
     SetUpAccountService,
     ChessPiecesThemeService,
     ChessBoardThemesService,
+    InitializeHoverEffectService,
+    DrawSquareFrameService,
+    CanvasHelperService,
+    DrawSquareBackgroundService,
+    DrawSquareCoordinatesService,
+    DrawSquareService,
+    ChessGameStateService,
+    DrawSquarePieceService,
   ],
 })
 export class ChessBoardComponent {
@@ -38,8 +52,10 @@ export class ChessBoardComponent {
   constructor(
     private setUpAccount: SetUpAccountService,
     private initializeCanvasView: InitializeCanvasViewService,
-    private initializeChessGame: InitializeChessGameService,
-  ) {}
+    private chessGameState: ChessGameStateService,
+    private initializeHoverEffect: InitializeHoverEffectService,
+  ) {
+  }
 
   public ngOnInit(): void {
     this.setUpAccount.execute({
@@ -53,7 +69,8 @@ export class ChessBoardComponent {
     const canvas = <HTMLCanvasElement>(
       document.getElementById('chess-board-canvas')
     );
+    this.chessGameState.initialize(this.initialFenString);
     this.initializeCanvasView.execute(canvas);
-    this.initializeChessGame.execute(this.initialFenString);
+    this.initializeHoverEffect.execute();
   }
 }

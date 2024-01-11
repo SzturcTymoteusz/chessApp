@@ -4,6 +4,7 @@ import {
   ChessBoardThemes,
 } from '../../types/chess-board-theme.types';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ChessBoard } from '../../types/board.types';
 
 @Injectable()
 export class ChessBoardConfigService {
@@ -23,5 +24,14 @@ export class ChessBoardConfigService {
 
   public set isWhiteOnBottom(isWhiteOnBottom: boolean) {
     this._isWhiteOnBottom.next(isWhiteOnBottom);
+  }
+
+  public getEmptyBoard(): ChessBoard {
+    const rows = new Array(this.verticalCoordinates.length).fill(null);
+    return {
+      pieces: rows.map(() =>
+        new Array(this.horizontalCoordinates.length).fill(null),
+      ),
+    };
   }
 }

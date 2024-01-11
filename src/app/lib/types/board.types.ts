@@ -1,3 +1,5 @@
+import { FenPiece } from './pieces.types';
+
 export interface BoardCoordinates {
   vertical: string;
   horizontal: string;
@@ -9,9 +11,11 @@ export interface BoardCoordinatesIndex {
   sum?: number;
 }
 
-export interface CoordinatesDrawConfig {
-  textBaseline: CanvasTextBaseline;
-  textAlign: CanvasTextAlign;
-  startPointX: number;
-  startPointY: number;
+export interface SquareCoordinates {
+  vertical: number;
+  horizontal: number;
+}
+
+export interface ChessBoard {
+  pieces: (FenPiece | null)[][];
 }
