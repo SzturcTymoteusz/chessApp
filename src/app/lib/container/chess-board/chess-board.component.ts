@@ -60,7 +60,7 @@ export class ChessBoardComponent {
   public ngOnInit(): void {
     this.setUpAccount.execute({
       isWhiteOnBottom: true,
-      chessPiecesTheme: ChessPiecesThemes.Metal,
+      chessPiecesTheme: ChessPiecesThemes.Classic,
       chessBoardTheme: ChessBoardThemes.Glass,
     });
   }
