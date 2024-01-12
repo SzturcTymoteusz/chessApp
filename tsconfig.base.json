@@ -10,6 +10,9 @@
     "target": "ES2022",
     "module": "ES2022",
     "lib": ["ES2022", "dom"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "chess-board": ["chess-board/src/index.ts"]
+    }
   }
 }

@@ -1,15 +1,17 @@
-import {Injectable} from '@angular/core';
-import {ChessBoard, SquareCoordinates} from '../../types/board.types';
-import {FenStringHelperService} from '../helpers/fen-string-helper.service';
-import {FenPiece} from '../../types/pieces.types';
-import {ChessBoardConfigService} from "../configuration/chess-board-config.service";
+import { Injectable } from '@angular/core';
+import { ChessBoard, SquareCoordinates } from '../../types/board.types';
+import { FenStringHelperService } from '../helpers/fen-string-helper.service';
+import { FenPiece } from '../../types/pieces.types';
+import { ChessBoardConfigService } from '../configuration/chess-board-config.service';
 
 @Injectable()
 export class ChessGameStateService {
   private _board: ChessBoard;
 
-  constructor(private fenStringHelper: FenStringHelperService, private chessBoardConfig: ChessBoardConfigService) {
-  }
+  constructor(
+    private fenStringHelper: FenStringHelperService,
+    private chessBoardConfig: ChessBoardConfigService,
+  ) {}
 
   public get board(): ChessBoard {
     return this._board;
