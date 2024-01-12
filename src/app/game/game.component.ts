@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ChessBoardComponent } from '../lib/container/chess-board/chess-board.component';
+import { ChessBoardComponent } from '@chess-board';
 
 @Component({
   selector: 'app-game',
