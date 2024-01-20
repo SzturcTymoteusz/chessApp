@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SquareCoordinates } from '../../types/board.types';
 import { ChessBoardCanvasService } from '../chess-board-canvas.service';
 import { CanvasHelperService } from '../helpers/canvas-helper.service';
-import { ChessBoardThemesService } from '../configuration/chess-board-themes.service';
+import { accountStore } from '../../state/account.store';
 
 @Injectable()
 export class DrawSquareFrameService {
+  private accountStore = inject(accountStore);
   private frameWidth = 2;
 
   constructor(
     private chessBoardCanvas: ChessBoardCanvasService,
     private canvasHelper: CanvasHelperService,
-    private chessBoardThemes: ChessBoardThemesService,
   ) {}
 
   public draw(
@@ -34,7 +34,7 @@ export class DrawSquareFrameService {
   }
 
   public clear(squareCoordinates: SquareCoordinates): void {
-    const chessBoardTheme = this.chessBoardThemes.currentTheme;
+    const chessBoardTheme = this.accountStore.chessBoardTheme();
     const frameColor = this.isDarkSquare(
       squareCoordinates.vertical + squareCoordinates.horizontal,
     )

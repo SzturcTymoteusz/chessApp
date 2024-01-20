@@ -16,6 +16,11 @@ export interface SquareCoordinates {
   horizontal: number;
 }
 
+export type ChessBoardPieces = (FenPiece | null)[][];
+
 export interface ChessBoard {
-  pieces: (FenPiece | null)[][];
+  pieces: ChessBoardPieces;
+  verticalCoordinates: string[];
+  horizontalCoordinates: string[];
+  isWhiteOnBottom: boolean;
 }

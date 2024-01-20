@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ChessBoardCanvasService } from '../chess-board-canvas.service';
 import { SquareCoordinates } from '../../types/board.types';
 import { DrawSquareFrameService } from '../draw/draw-square-frame.service';
 import { CanvasHelperService } from '../helpers/canvas-helper.service';
-import { ChessGameStateService } from '../state/chess-game-state.service';
+import { chessBoardStore } from '../../state/chess-board.store';
 
 @Injectable()
 export class InitializeHoverEffectService {
+  private chessBoardStore = inject(chessBoardStore);
   private _previousSquare: SquareCoordinates | null = null;
 
   constructor(
     private chessBoardCanvas: ChessBoardCanvasService,
     private drawSquareFrame: DrawSquareFrameService,
     private canvasHelper: CanvasHelperService,
-    private chessGameState: ChessGameStateService,
   ) {}
 
   private get previousSquare(): SquareCoordinates | null {
     return this._previousSquare;
   }
 
-  private set previousSquare(value: SquareCoordinates) {
+  private set previousSquare(value: SquareCoordinates | null) {
     this._previousSquare = value;
   }
 
@@ -33,14 +33,17 @@ export class InitializeHoverEffectService {
 
     canvas.addEventListener('mouseleave', () => {
       canvas.removeEventListener('mousemove', this.handleMouseMove.bind(this));
-      if (this.previousSquare) this.drawSquareFrame.clear(this.previousSquare);
+      if (this.previousSquare) {
+        this.drawSquareFrame.clear(this.previousSquare);
+        this.previousSquare = null;
+      }
     });
   }
 
   private handleMouseMove(event: MouseEvent): void {
     const cursorPoint = this.canvasHelper.getCursorPoint(event);
     const currentSquare = this.canvasHelper.getSquareCoordinates(cursorPoint);
-    const isOccupiedSquare = this.chessGameState.getPiece(currentSquare);
+    const isOccupiedSquare = this.chessBoardStore.getPiece(currentSquare);
 
     if (!this.isSquareChanged(currentSquare)) {
       return;

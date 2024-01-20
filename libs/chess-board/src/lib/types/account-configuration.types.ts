@@ -4,5 +4,4 @@ import { ChessPiecesThemes } from './chess-pieces-theme.types';
 export interface AccountConfiguration {
   chessBoardTheme: ChessBoardThemes;
   chessPiecesTheme: ChessPiecesThemes;
-  isWhiteOnBottom: boolean;
 }
