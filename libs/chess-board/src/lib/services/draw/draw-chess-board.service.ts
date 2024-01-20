@@ -1,33 +1,25 @@
-import { Injectable } from '@angular/core';
-import { CoordinatesHelperService } from '../helpers/coordinates-helper.service';
-import { Coordinates } from '../../types/coordinates.types';
+import { inject, Injectable } from '@angular/core';
 import { DrawSquareService } from './draw-square.service';
+import { chessBoardStore } from '../../state/chess-board.store';
 
 @Injectable()
 export class DrawChessBoardService {
-  private verticalCoordinates: string[];
-  private horizontalCoordinates: string[];
+  private chessBoardStore = inject(chessBoardStore);
 
-  constructor(
-    private coordinatesHelper: CoordinatesHelperService,
-    private drawSquare: DrawSquareService,
-  ) {}
+  constructor(private drawSquare: DrawSquareService) {}
 
   public execute(): void {
-    this.verticalCoordinates = this.coordinatesHelper.getCoordinatesOrder(
-      Coordinates.Vertical,
-    );
-    this.horizontalCoordinates = this.coordinatesHelper.getCoordinatesOrder(
-      Coordinates.Horizontal,
-    );
-
-    this.verticalCoordinates.forEach((_vertical, vertical) => {
-      this.horizontalCoordinates.forEach((_horizontal, horizontal) => {
-        this.drawSquare.draw({
-          vertical,
-          horizontal,
-        });
+    this.chessBoardStore
+      .horizontalCoordinatesSorted()
+      .forEach((_vertical, vertical) => {
+        this.chessBoardStore
+          .verticalCoordinatesSorted()
+          .forEach((_horizontal, horizontal) => {
+            this.drawSquare.draw({
+              vertical,
+              horizontal,
+            });
+          });
       });
-    });
   }
 }

@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ChessBoardCanvasService } from '../chess-board-canvas.service';
 import { CanvasHelperService } from '../helpers/canvas-helper.service';
 import { SquareCoordinates } from '../../types/board.types';
-import { ChessBoardThemesService } from '../configuration/chess-board-themes.service';
+import { accountStore } from '../../state/account.store';
 
 @Injectable()
 export class DrawSquareBackgroundService {
+  private accountStore = inject(accountStore);
+
   constructor(
     private chessBoardCanvas: ChessBoardCanvasService,
     private canvasHelper: CanvasHelperService,
-    private chessBoardThemes: ChessBoardThemesService,
   ) {}
 
   public draw(squareCoordinates: SquareCoordinates): void {
-    const chessBoardTheme = this.chessBoardThemes.currentTheme;
+    const chessBoardTheme = this.accountStore.chessBoardTheme();
     const backgroundColor = this.isDarkSquare(
       squareCoordinates.vertical + squareCoordinates.horizontal,
     )

@@ -9,9 +9,7 @@ import { FenPiece } from '../../types/pieces.types';
 
 @Injectable()
 export class ChessPiecesThemeService {
-  public currentTheme$: Observable<ChessPiecesTheme>;
-
-  private _themes: Record<ChessPiecesThemes, ChessPiecesTheme> = {
+  static themes: Record<ChessPiecesThemes, ChessPiecesTheme> = {
     [ChessPiecesThemes.Classic]: {
       [FenPiece.R]:
         'assets/chess-pieces-themes/classic/classic_piece_r_light.svg',
@@ -53,19 +51,4 @@ export class ChessPiecesThemeService {
       [FenPiece.p]: 'assets/chess-pieces-themes/metal/metal_piece_p_dark.png',
     },
   };
-  private _currentTheme = new BehaviorSubject(
-    this._themes[ChessBoardThemes.Classic],
-  );
-
-  constructor() {
-    this.currentTheme$ = this._currentTheme.asObservable();
-  }
-
-  public get currentTheme(): ChessPiecesTheme {
-    return this._currentTheme.getValue();
-  }
-
-  public set currentTheme(theme: ChessPiecesThemes) {
-    this._currentTheme.next(this._themes[theme]);
-  }
 }

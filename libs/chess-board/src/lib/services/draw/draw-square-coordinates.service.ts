@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SquareCoordinates } from '../../types/board.types';
 import { ChessBoardCanvasService } from '../chess-board-canvas.service';
 import { CanvasHelperService } from '../helpers/canvas-helper.service';
-import { ChessBoardThemesService } from '../configuration/chess-board-themes.service';
-import { CoordinatesHelperService } from '../helpers/coordinates-helper.service';
-import { Coordinates } from '../../types/coordinates.types';
+import { chessBoardStore } from '../../state/chess-board.store';
+import { accountStore } from '../../state/account.store';
 
 @Injectable()
 export class DrawSquareCoordinatesService {
+  private chessBoardStore = inject(chessBoardStore);
+  private accountStore = inject(accountStore);
+
   constructor(
     private chessBoardCanvas: ChessBoardCanvasService,
     private canvasHelper: CanvasHelperService,
-    private chessBoardThemes: ChessBoardThemesService,
-    private coordinatesHelper: CoordinatesHelperService,
   ) {}
 
   public draw(squareCoordinates: SquareCoordinates): void {
@@ -26,9 +26,10 @@ export class DrawSquareCoordinatesService {
   private drawVerticalCoordinate(squareCoordinates: SquareCoordinates): void {
     const context = this.chessBoardCanvas.context;
     const squareSize = this.canvasHelper.getSquareSize();
-    const coordinate = this.coordinatesHelper.getCoordinatesOrder(
-      Coordinates.Vertical,
-    )[squareCoordinates.vertical];
+    const coordinate =
+      this.chessBoardStore.verticalCoordinatesSorted()[
+        squareCoordinates.vertical
+      ];
     const startPointX =
       squareCoordinates.horizontal * squareSize + squareSize / 16;
     const startPointY =
@@ -44,9 +45,10 @@ export class DrawSquareCoordinatesService {
   private drawHorizontalCoordinate(squareCoordinates: SquareCoordinates): void {
     const context = this.chessBoardCanvas.context;
     const squareSize = this.canvasHelper.getSquareSize();
-    const coordinate = this.coordinatesHelper.getCoordinatesOrder(
-      Coordinates.Horizontal,
-    )[squareCoordinates.horizontal];
+    const coordinate =
+      this.chessBoardStore.horizontalCoordinatesSorted()[
+        squareCoordinates.horizontal
+      ];
     const startPointX =
       squareCoordinates.horizontal * squareSize + squareSize - squareSize / 16;
     const startPointY =
@@ -66,7 +68,7 @@ export class DrawSquareCoordinatesService {
   }
 
   private getColor(squareCoordinates: SquareCoordinates): string {
-    const chessBoardTheme = this.chessBoardThemes.currentTheme;
+    const chessBoardTheme = this.accountStore.chessBoardTheme();
     return !this.isDarkSquare(
       squareCoordinates.vertical + squareCoordinates.horizontal,
     )
