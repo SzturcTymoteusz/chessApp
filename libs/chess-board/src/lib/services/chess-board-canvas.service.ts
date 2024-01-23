@@ -1,37 +1,28 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 @Injectable()
 export class ChessBoardCanvasService {
-  private _context: CanvasRenderingContext2D;
-  private _canvas: HTMLCanvasElement;
+  public state = signal<{ canvas: HTMLCanvasElement | null }>({ canvas: null });
+  public canvas = computed(() => this.state().canvas);
+  public context = computed(() => this.canvas()?.getContext('2d')!);
+  public canvasWidth = signal(0);
 
-  public get context(): CanvasRenderingContext2D {
-    return this._context;
+  public initialize(canvas: HTMLCanvasElement): void {
+    this.state.set({ ...this.state, canvas });
+    this.clearCanvas();
   }
 
-  public get canvas(): HTMLCanvasElement {
-    return this._canvas;
-  }
-
-  public get width(): number {
-    return this.canvas.width;
-  }
-
-  public get height(): number {
-    return this.canvas.height;
-  }
-
-  public setUpCanvas(canvas: HTMLCanvasElement): void {
-    const context = canvas.getContext('2d');
-
-    this._canvas = canvas;
-
-    if (context) {
-      this._context = context;
+  public resize(width: number, height: number): void {
+    const { canvas } = this.state();
+    if (canvas) {
+      canvas.width = width;
+      canvas.height = height;
+      this.canvasWidth.set(width);
+      this.state.set({ ...this.state(), canvas });
     }
   }
 
-  public clearCanvas(): void {
-    this.context.clearRect(0, 0, this.width, this.height);
+  private clearCanvas(): void {
+    this.context().clearRect(0, 0, this.canvas()!.width, this.canvas()!.height);
   }
 }

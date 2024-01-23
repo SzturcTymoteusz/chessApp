@@ -8,11 +8,11 @@ export class CanvasHelperService {
   constructor(private chessBoardCanvas: ChessBoardCanvasService) {}
 
   public set cursor(cursor: string) {
-    this.chessBoardCanvas.canvas.style.cursor = cursor;
+    this.chessBoardCanvas.canvas()!.style.cursor = cursor;
   }
 
   public getCursorPoint(event: MouseEvent): CanvasPoint {
-    const canvas = this.chessBoardCanvas.canvas;
+    const canvas = this.chessBoardCanvas.canvas()!;
     const rect = canvas.getBoundingClientRect();
     return {
       x: event.clientX - rect.left,
@@ -21,7 +21,14 @@ export class CanvasHelperService {
   }
 
   public getSquareSize(): number {
-    return this.chessBoardCanvas.width / 8;
+    return Math.floor(this.chessBoardCanvas.canvasWidth() / 8);
+  }
+
+  public getUnfilledBoardArea(): number {
+    const squareSize = this.getSquareSize();
+    return Math.floor(
+      (this.chessBoardCanvas.canvasWidth() - squareSize * 8) / 2,
+    );
   }
 
   public getSquareCoordinates(point: CanvasPoint): SquareCoordinates {

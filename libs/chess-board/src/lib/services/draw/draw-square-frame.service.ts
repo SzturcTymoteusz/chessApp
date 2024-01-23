@@ -18,15 +18,26 @@ export class DrawSquareFrameService {
     squareCoordinates: SquareCoordinates,
     frameColor = 'white',
   ): void {
-    const context = this.chessBoardCanvas.context;
+    const context = this.chessBoardCanvas.context();
     const squareSize = this.canvasHelper.getSquareSize();
+    const unfilledBoardArea = this.canvasHelper.getUnfilledBoardArea();
+    const isOnChessBoard =
+      squareCoordinates.vertical >= 0 &&
+      squareCoordinates.vertical <= 7 &&
+      squareCoordinates.horizontal >= 0 &&
+      squareCoordinates.horizontal <= 7;
+    if (!isOnChessBoard) return;
 
     context.beginPath();
     context.strokeStyle = frameColor;
     context.lineWidth = this.frameWidth;
     context.strokeRect(
-      squareCoordinates.horizontal * squareSize + this.frameWidth / 2,
-      squareCoordinates.vertical * squareSize + this.frameWidth / 2,
+      unfilledBoardArea +
+        squareCoordinates.horizontal * squareSize +
+        this.frameWidth / 2,
+      unfilledBoardArea +
+        squareCoordinates.vertical * squareSize +
+        this.frameWidth / 2,
       squareSize - this.frameWidth,
       squareSize - this.frameWidth,
     );

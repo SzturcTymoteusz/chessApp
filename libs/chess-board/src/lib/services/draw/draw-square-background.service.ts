@@ -20,14 +20,15 @@ export class DrawSquareBackgroundService {
     )
       ? chessBoardTheme.lightSquareColor
       : chessBoardTheme.darkSquareColor;
-    const context = this.chessBoardCanvas.context;
+    const context = this.chessBoardCanvas.context();
     const squareSize = this.canvasHelper.getSquareSize();
+    const unfilledBoardArea = this.canvasHelper.getUnfilledBoardArea();
 
     context.fillStyle = backgroundColor;
     context.textBaseline = 'top';
     context.fillRect(
-      squareCoordinates.horizontal * squareSize,
-      squareCoordinates.vertical * squareSize,
+      unfilledBoardArea + squareCoordinates.horizontal * squareSize,
+      unfilledBoardArea + squareCoordinates.vertical * squareSize,
       squareSize,
       squareSize,
     );

@@ -25,7 +25,7 @@ export class InitializeHoverEffectService {
   }
 
   public execute(): void {
-    const canvas = this.chessBoardCanvas.canvas;
+    const canvas = this.chessBoardCanvas.canvas()!;
 
     canvas.addEventListener('mouseenter', () => {
       canvas.addEventListener('mousemove', this.handleMouseMove.bind(this));
