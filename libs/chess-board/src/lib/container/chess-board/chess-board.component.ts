@@ -1,22 +1,22 @@
-import {Component, inject} from '@angular/core';
-import {ChessBoardCanvasService} from '../../services/chess-board-canvas.service';
-import {InitializeChessBoardViewService} from '../../services/manager/initialize-chess-board-view.service';
-import {DrawChessBoardService} from '../../services/draw/draw-chess-board.service';
-import {FenStringHelperService} from '../../services/helpers/fen-string-helper.service';
-import {ChessPiecesThemeService} from '../../services/configuration/chess-pieces-theme.service';
-import {ChessBoardThemesService} from '../../services/configuration/chess-board-themes.service';
-import {ChessPiecesThemes} from '../../types/chess-pieces-theme.types';
-import {ChessBoardThemes} from '../../types/chess-board-theme.types';
-import {InitializeHoverEffectService} from '../../services/manager/initialize-hover-effect.service';
-import {DrawSquareFrameService} from '../../services/draw/draw-square-frame.service';
-import {CanvasHelperService} from '../../services/helpers/canvas-helper.service';
-import {DrawSquareBackgroundService} from '../../services/draw/draw-square-background.service';
-import {DrawSquareCoordinatesService} from '../../services/draw/draw-square-coordinates.service';
-import {DrawSquareService} from '../../services/draw/draw-square.service';
-import {DrawSquarePieceService} from '../../services/draw/draw-square-piece.service';
-import {chessBoardStore} from '../../state/chess-board.store';
-import {PieceImageService} from '../../services/configuration/piece-image.service';
-import {accountStore} from '../../state/account.store';
+import { Component, ElementRef, inject, NgZone } from '@angular/core';
+import { ChessBoardCanvasService } from '../../services/chess-board-canvas.service';
+import { InitializeChessBoardViewService } from '../../services/manager/initialize-chess-board-view.service';
+import { DrawChessBoardService } from '../../services/draw/draw-chess-board.service';
+import { FenStringHelperService } from '../../services/helpers/fen-string-helper.service';
+import { ChessPiecesThemeService } from '../../services/configuration/chess-pieces-theme.service';
+import { ChessBoardThemesService } from '../../services/configuration/chess-board-themes.service';
+import { ChessPiecesThemes } from '../../types/chess-pieces-theme.types';
+import { ChessBoardThemes } from '../../types/chess-board-theme.types';
+import { InitializeHoverEffectService } from '../../services/manager/initialize-hover-effect.service';
+import { DrawSquareFrameService } from '../../services/draw/draw-square-frame.service';
+import { CanvasHelperService } from '../../services/helpers/canvas-helper.service';
+import { DrawSquareBackgroundService } from '../../services/draw/draw-square-background.service';
+import { DrawSquareCoordinatesService } from '../../services/draw/draw-square-coordinates.service';
+import { DrawSquareService } from '../../services/draw/draw-square.service';
+import { DrawSquarePieceService } from '../../services/draw/draw-square-piece.service';
+import { chessBoardStore } from '../../state/chess-board.store';
+import { PieceImageService } from '../../services/configuration/piece-image.service';
+import { accountStore } from '../../state/account.store';
 
 @Component({
   selector: 'ca-chess-board',
@@ -44,9 +44,13 @@ import {accountStore} from '../../state/account.store';
 export class ChessBoardComponent {
   private chessBoardStore = inject(chessBoardStore);
   private accountStore = inject(accountStore);
+  private chessBoardCanvasObserver: ResizeObserver;
 
-  constructor(private initializeChessBoardView: InitializeChessBoardViewService) {
-  }
+  constructor(
+    private initializeChessBoardView: InitializeChessBoardViewService,
+    private chessBoardCanvas: ChessBoardCanvasService,
+    private zone: NgZone,
+  ) {}
 
   public ngOnInit(): void {
     this.chessBoardStore.initialize({
@@ -58,6 +62,14 @@ export class ChessBoardComponent {
       chessBoardTheme: ChessBoardThemes.Glass,
       chessPiecesTheme: ChessPiecesThemes.Classic,
     });
+
+    this.chessBoardCanvasObserver = new ResizeObserver((entries) => {
+      this.zone.run(() => {
+        const width = entries[0].contentRect.width;
+        const height = entries[0].contentRect.height;
+        this.chessBoardCanvas.resize(width, height);
+      });
+    });
   }
 
   public ngAfterViewInit(): void {
@@ -65,6 +77,11 @@ export class ChessBoardComponent {
       document.getElementById('chess-board-canvas')
     );
     this.initializeChessBoardView.execute(canvas);
+    this.chessBoardCanvasObserver.observe(canvas);
+  }
+
+  public ngOnDestroy(): void {
+    this.chessBoardCanvasObserver.disconnect();
   }
 
   public toggle(): void {

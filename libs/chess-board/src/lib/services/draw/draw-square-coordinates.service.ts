@@ -24,16 +24,21 @@ export class DrawSquareCoordinatesService {
   }
 
   private drawVerticalCoordinate(squareCoordinates: SquareCoordinates): void {
-    const context = this.chessBoardCanvas.context;
+    const context = this.chessBoardCanvas.context();
     const squareSize = this.canvasHelper.getSquareSize();
+    const unfilledBoardArea = this.canvasHelper.getUnfilledBoardArea();
     const coordinate =
       this.chessBoardStore.verticalCoordinatesSorted()[
         squareCoordinates.vertical
       ];
     const startPointX =
-      squareCoordinates.horizontal * squareSize + squareSize / 16;
+      unfilledBoardArea +
+      squareCoordinates.horizontal * squareSize +
+      squareSize / 16;
     const startPointY =
-      squareCoordinates.vertical * squareSize + squareSize / 16;
+      unfilledBoardArea +
+      squareCoordinates.vertical * squareSize +
+      squareSize / 16;
 
     context.font = this.getFont();
     context.fillStyle = this.getColor(squareCoordinates);
@@ -43,16 +48,24 @@ export class DrawSquareCoordinatesService {
   }
 
   private drawHorizontalCoordinate(squareCoordinates: SquareCoordinates): void {
-    const context = this.chessBoardCanvas.context;
+    const context = this.chessBoardCanvas.context();
     const squareSize = this.canvasHelper.getSquareSize();
+    const unfilledBoardSize =
+      this.chessBoardCanvas.canvasWidth() - squareSize * 8;
     const coordinate =
       this.chessBoardStore.horizontalCoordinatesSorted()[
         squareCoordinates.horizontal
       ];
     const startPointX =
-      squareCoordinates.horizontal * squareSize + squareSize - squareSize / 16;
+      unfilledBoardSize / 2 +
+      squareCoordinates.horizontal * squareSize +
+      squareSize -
+      squareSize / 16;
     const startPointY =
-      squareCoordinates.vertical * squareSize + squareSize - squareSize / 16;
+      unfilledBoardSize / 2 +
+      squareCoordinates.vertical * squareSize +
+      squareSize -
+      squareSize / 16;
 
     context.font = this.getFont();
     context.fillStyle = this.getColor(squareCoordinates);

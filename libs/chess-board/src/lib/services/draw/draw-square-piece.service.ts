@@ -20,14 +20,15 @@ export class DrawSquarePieceService {
 
     if (!piece) return;
 
-    const context = this.chessBoardCanvas.context;
+    const context = this.chessBoardCanvas.context();
     const squareSize = this.canvasHelper.getSquareSize();
+    const unfilledBoardArea = this.canvasHelper.getUnfilledBoardArea();
     const image = this.pieceImage.getImage(piece);
 
     context.drawImage(
       image,
-      square.horizontal * squareSize,
-      square.vertical * squareSize,
+      unfilledBoardArea + square.horizontal * squareSize,
+      unfilledBoardArea + square.vertical * squareSize,
       squareSize,
       squareSize,
     );
